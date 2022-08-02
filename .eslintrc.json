@@ -24,7 +24,6 @@
     "no-unused-vars": "off",
     "no-empty-function": "off",
     "prefer-const": "off",
-    // "quotes": [1, "single"],
     "@typescript-eslint/no-unused-vars": "off"
   }
 }
