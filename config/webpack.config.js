@@ -1,15 +1,15 @@
-const path = require("path");
-const EslintWebpackPlugin = require("eslint-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin");
-const TerserWebpackPlugin = require("terser-webpack-plugin");
-const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const path = require("path")
+const EslintWebpackPlugin = require("eslint-webpack-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
+const TerserWebpackPlugin = require("terser-webpack-plugin")
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin")
+const CopyPlugin = require("copy-webpack-plugin")
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
 
 // 获取cross-env定义的环境变量
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === "production"
 
 // 返回处理样式loader函数
 const getStyleLoaders = (pre) => {
@@ -22,9 +22,9 @@ const getStyleLoaders = (pre) => {
       loader: "postcss-loader",
       options: {
         postcssOptions: {
-          plugins: ["postcss-preset-env"],
-        },
-      },
+          plugins: ["postcss-preset-env"]
+        }
+      }
     },
     pre && {
       loader: pre,
@@ -35,13 +35,13 @@ const getStyleLoaders = (pre) => {
               // 主题色文档：https://ant.design/docs/react/customize-theme-cn#Ant-Design-%E7%9A%84%E6%A0%B7%E5%BC%8F%E5%8F%98%E9%87%8F
               lessOptions: {
                 modifyVars: { "@primary-color": "#1DA57A" },
-                javascriptEnabled: true,
-              },
+                javascriptEnabled: true
+              }
             }
-          : {},
-    },
-  ].filter(Boolean);
-};
+          : {}
+    }
+  ].filter(Boolean)
+}
 
 module.exports = {
   entry: "./src/main.js",
@@ -50,26 +50,26 @@ module.exports = {
     filename: isProduction ? "static/js/[name].[contenthash:10].js" : "static/js/[name].js",
     chunkFilename: isProduction ? "static/js/[name].[contenthash:10].chunk.js" : "static/js/[name].chunk.js",
     assetModuleFilename: "static/media/[hash:10][ext][query]",
-    clean: true,
+    clean: true
   },
   module: {
     rules: [
       // 处理css
       {
         test: /\.css$/,
-        use: getStyleLoaders(),
+        use: getStyleLoaders()
       },
       {
         test: /\.less$/,
-        use: getStyleLoaders("less-loader"),
+        use: getStyleLoaders("less-loader")
       },
       {
         test: /\.s[ac]ss$/,
-        use: getStyleLoaders("sass-loader"),
+        use: getStyleLoaders("sass-loader")
       },
       {
         test: /\.styl$/,
-        use: getStyleLoaders("stylus-loader"),
+        use: getStyleLoaders("stylus-loader")
       },
       // 处理图片
       {
@@ -77,14 +77,14 @@ module.exports = {
         type: "asset",
         parser: {
           dataUrlCondition: {
-            maxSize: 10 * 1024,
-          },
-        },
+            maxSize: 10 * 1024
+          }
+        }
       },
       // 处理其他资源
       {
         test: /\.(woff2?|ttf)$/,
-        type: "asset/resource",
+        type: "asset/resource"
       },
       // 处理js
       {
@@ -95,11 +95,11 @@ module.exports = {
           cacheDirectory: true,
           cacheCompression: false,
           plugins: [
-            !isProduction && "react-refresh/babel", // 激活js的HMR
-          ].filter(Boolean),
-        },
-      },
-    ],
+            !isProduction && "react-refresh/babel" // 激活js的HMR
+          ].filter(Boolean)
+        }
+      }
+    ]
   },
   // 处理html
   plugins: [
@@ -107,15 +107,15 @@ module.exports = {
       context: path.resolve(__dirname, "../src"),
       exclude: "node_modules",
       cache: true,
-      cacheLocation: path.resolve(__dirname, "../node_modules/.cache/.eslintcache"),
+      cacheLocation: path.resolve(__dirname, "../node_modules/.cache/.eslintcache")
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "../public/index.html"),
+      template: path.resolve(__dirname, "../public/index.html")
     }),
     isProduction &&
       new MiniCssExtractPlugin({
         filename: "static/css/[name].[contenthash:10].css",
-        chunkFilename: "static/css/[name].[contenthash:10].chunk.css",
+        chunkFilename: "static/css/[name].[contenthash:10].chunk.css"
       }),
     isProduction &&
       new CopyPlugin({
@@ -125,12 +125,12 @@ module.exports = {
             to: path.resolve(__dirname, "../dist"),
             globOptions: {
               // 忽略index.html文件
-              ignore: ["**/index.html"],
-            },
-          },
-        ],
+              ignore: ["**/index.html"]
+            }
+          }
+        ]
       }),
-    !isProduction && new ReactRefreshWebpackPlugin(),
+    !isProduction && new ReactRefreshWebpackPlugin()
   ].filter(Boolean),
   mode: isProduction ? "production" : "development",
   devtool: isProduction ? "source-map" : "cheap-module-source-map",
@@ -142,24 +142,24 @@ module.exports = {
         react: {
           test: /[\\/]node_modules[\\/]react(.*)?[\\/]/,
           name: "chunk-react",
-          priority: 40,
+          priority: 40
         },
         // antd 单独打包
         antd: {
           test: /[\\/]node_modules[\\/]antd[\\/]/,
           name: "chunk-antd",
-          priority: 30,
+          priority: 30
         },
         // 剩下node_modules单独打包
         libs: {
           test: /[\\/]node_modules[\\/]/,
           name: "chunk-libs",
-          priority: 20,
-        },
-      },
+          priority: 20
+        }
+      }
     },
     runtimeChunk: {
-      name: (entrypoint) => `runtime~${entrypoint.name}.js`,
+      name: (entrypoint) => `runtime~${entrypoint.name}.js`
     },
     // 是否需要进行压缩
     minimize: isProduction,
@@ -183,29 +183,29 @@ module.exports = {
                     {
                       name: "sortAttrs",
                       params: {
-                        xmlnsOrder: "alphabetical",
-                      },
-                    },
-                  ],
-                },
-              ],
-            ],
-          },
-        },
-      }),
-    ],
+                        xmlnsOrder: "alphabetical"
+                      }
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        }
+      })
+    ]
   },
   // webpack解析模块加载选项
   resolve: {
     // 自动补全文件扩展名
-    extensions: [".jsx", ".js", ".json"],
+    extensions: [".jsx", ".js", ".json"]
   },
   devServer: {
     host: "localhost",
     port: 3000,
     open: true,
     hot: true, // 开启HMR
-    historyApiFallback: true, // 解决前端路由刷新404问题
+    historyApiFallback: true // 解决前端路由刷新404问题
   },
-  performance: false, // 关闭性能分析，提升打包速度
-};
+  performance: false // 关闭性能分析，提升打包速度
+}
