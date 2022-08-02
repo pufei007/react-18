@@ -23,6 +23,11 @@
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
