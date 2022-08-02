@@ -29,6 +29,14 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
+  "lint-staged": {
+    "src/**": [
+      "npx prettier --write"
+    ],
+    "src/**/*.{js,ts}": [
+      "npx eslint --fix"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
