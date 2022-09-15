@@ -18,7 +18,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "no-console": "error",
+    "no-console": "warn",
     "no-debugger": "error",
     "no-unused-components": "off",
     "no-unused-vars": "off",
