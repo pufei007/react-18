@@ -5,6 +5,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 const Test = lazy(() => import("../pages/test"));
 const Cesium = lazy(() => import("../pages/cesium"));
+const Query = lazy(() => import("../pages/query"));
 
 // eslint-disable-next-line react/display-name
 const SuspenseComponent = (Component: any) => (props: any) => {
@@ -22,6 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Test></Test>}></Route>
           <Route path="cesium" element={<Cesium></Cesium>}></Route>
+          <Route path="query" element={<Query></Query>}></Route>
         </Routes>
       </BrowserRouter>
     </>

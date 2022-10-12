@@ -8,8 +8,12 @@ import {
   Color,
   ArcGisMapServerImageryProvider,
 } from "cesium";
-// import "cesium/Build/Cesium/Widgets/widgets.css";
+// import "cesium/Build/Cesium/Cesium";
 import icon from "../../assets/location.svg";
+import demoCzml from "./demo";
+import simple from "./simple";
+// @ts-ignore
+// import CesiumSensorVolumes from "cesium-sensors/lib/custom/custom-sensor-volume";
 import "./index.less";
 
 const CesiumPage = () => {
@@ -17,13 +21,13 @@ const CesiumPage = () => {
   const viewerContainerRef = useRef(null);
 
   useEffect(() => {
-    const handler = new Cesium.ScreenSpaceEventHandler(
-      csmViewerRef.current?.scene.canvas
-    );
-    handler.setInputAction((e: any) => {
-      var pick = csmViewerRef.current?.scene.pick(e.position);
-      console.log(e, pick);
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    // const handler = new Cesium.ScreenSpaceEventHandler(
+    //   csmViewerRef.current?.scene.canvas
+    // );
+    // handler.setInputAction((e: any) => {
+    //   var pick = csmViewerRef.current?.scene.pick(e.position);
+    //   console.log(e, pick);
+    // }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   }, [csmViewerRef.current]);
 
   useEffect(() => {
@@ -31,25 +35,37 @@ const CesiumPage = () => {
       csmViewerRef.current = new Viewer("csm-viewer-container");
       // console.log(csmViewerRef);
 
+      // 加载不同的地图
       // 使用arcgis map
       csmViewerRef.current.imageryLayers.addImageryProvider(
-        // @ts-ignore
         new ArcGisMapServerImageryProvider({
           url: "http://cache1.arcgisonline.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer",
         })
       );
 
+      csmViewerRef.current.dataSources.add(
+        Cesium.CzmlDataSource.load(demoCzml)
+        // Cesium.CzmlDataSource.load(simple)
+      );
+      csmViewerRef.current.camera.flyHome(0);
+      // csmViewerRef.current.scene.camera.setView({
+      //   destination: Cesium.Cartesian3.fromDegrees(-116.52, 35.02, 95000),
+      //   orientation: {
+      //     heading: 12,
+      //   },
+      // });
+
       // 初始化场景位置;
-      csmViewerRef.current.scene.camera.flyTo({
-        // 初始化相机经纬度
-        // @ts-ignore
-        destination: new Cartesian3.fromDegrees(121.534575, 38.926131, 400),
-        orientation: {
-          heading: Math.toRadians(0.0),
-          pitch: Math.toRadians(-45), //从上往下看为-90
-          roll: 0,
-        },
-      });
+      // csmViewerRef.current.scene.camera.flyTo({
+      //   // 初始化相机经纬度
+      //   // @ts-ignore
+      //   destination: new Cartesian3.fromDegrees(116.39, 39.91, 95000),
+      //   orientation: {
+      //     heading: 6,
+      //     pitch: Math.toRadians(90), //从上往下看为-90
+      //     roll: 0,
+      //   },
+      // });
 
       // 增加广告牌
       csmViewerRef.current.entities.add({
@@ -88,6 +104,20 @@ const CesiumPage = () => {
           // }),
         },
       });
+
+      // To create an entity directly
+      // var entityCollection = new Cesium.EntityCollection();
+
+      // var entity: any = entityCollection.getOrCreateEntity("test");
+      // entity.addProperty("conicSensor");
+
+      // configure other entity properties, e.g. position and orientation...
+
+      // @ts-ignore
+      // entity.conicSensor = new CesiumSensorVolumes.ConicSensorGraphics();
+      // entity.conicSensor.intersectionColor = new Cesium.ConstantProperty(
+      //   new Cesium.Color(0.1, 0.2, 0.3, 0.4)
+      // );
 
       // 多边形及多边体
       csmViewerRef.current.entities.add({
