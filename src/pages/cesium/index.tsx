@@ -37,11 +37,14 @@ const CesiumPage = () => {
 
       // 加载不同的地图
       // 使用arcgis map
-      csmViewerRef.current.imageryLayers.addImageryProvider(
-        new ArcGisMapServerImageryProvider({
-          url: "http://cache1.arcgisonline.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer",
-        })
-      );
+      // csmViewerRef.current.imageryLayers.addImageryProvider(
+      //   new ArcGisMapServerImageryProvider({
+      //     url: "http://cache1.arcgisonline.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer",
+      //   })
+      // );
+
+      csmViewerRef.current.baseLayerPicker.viewModel.selectedImagery =
+        csmViewerRef.current.baseLayerPicker.viewModel.imageryProviderViewModels[3];
 
       csmViewerRef.current.dataSources.add(
         Cesium.CzmlDataSource.load(demoCzml)
