@@ -23,3 +23,30 @@ export const scrollTo = (element: any) => {
   element.scrollIntoView({ behavior: "smooth", block: "end" });
   element.scrollIntoView({ behavior: "smooth" });
 };
+/**
+ * 把数组最后一项移到第一项
+ * @param arr
+ * @returns new array
+ */
+export const lastToFirst = (arr: any[]) => {
+  return arr.unshift(arr.pop());
+};
+
+/**
+ * 把数组的第一项放到最后一项
+ * @param arr
+ * @returns new array
+ */
+export const firstToLast = (arr: any[]) => {
+  return arr.push(arr.shift());
+};
+
+// 各种数组克隆
+const clone1 = (arr: any[]) => arr.slice(0);
+const clone2 = (arr: any[]) => [...arr];
+const clone3 = (arr: any[]) => Array.from(arr);
+const clone4 = (arr: any[]) => arr.map((x) => x);
+const clone5 = (arr: any[]) => JSON.parse(JSON.stringify(arr));
+const clone6 = (arr: any[]) => arr.concat([]);
+// @ts-ignore
+const clone7 = (arr: any[]) => window?.structuredClone?.(arr);
