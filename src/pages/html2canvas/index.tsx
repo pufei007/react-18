@@ -4,6 +4,7 @@ import html2canvas from "html2canvas";
 import ReactECharts from "echarts-for-react";
 import * as echarts from "echarts";
 import domtoimage from "dom-to-image";
+import "./index.less";
 
 const index: React.FC = () => {
   useEffect(() => {}, []);
@@ -246,7 +247,7 @@ const index: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="pageMain">
       <Button onClick={trans}>html to canvas</Button>
       <Button onClick={domto}>domtoimage</Button>
 

@@ -15,6 +15,7 @@
     "cesium": "^1.102.0",
     "craco-cesium": "^1.2.0",
     "craco-less": "^2.0.0",
+    "dayjs": "^1.11.7",
     "dom-to-image": "^2.6.0",
     "echarts": "^5.4.1",
     "echarts-for-react": "^3.0.2",
@@ -22,15 +23,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "6",
-    "react-scripts": "5.0.1",
     "typescript": "^4.4.2",
+    "vite-plugin-cesium": "^1.2.22",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "prepare": "husky install"
   },
   "husky": {
@@ -71,6 +71,7 @@
     "@types/dom-to-image": "^2.6.4",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.32.0",
+    "@vitejs/plugin-react": "^3.1.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^17.0.0",
@@ -80,6 +81,7 @@
     "eslint-plugin-react": "^7.30.1",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "vite": "^4.1.4"
   }
 }
