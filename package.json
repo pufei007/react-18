@@ -11,6 +11,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "ali-react-table": "^2.6.1",
     "antd": "^5.2.2",
     "cesium": "^1.102.0",
     "craco-cesium": "^1.2.0",

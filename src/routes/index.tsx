@@ -15,6 +15,7 @@ const Cesium = lazy(() => import("../pages/cesium"));
 const Query = lazy(() => import("../pages/query"));
 const Infinite = lazy(() => import("../pages/infinite"));
 const Html2canvas = lazy(() => import("../pages/html2canvas"));
+const AliReactTable = lazy(() => import("../pages/aliReactTable"));
 
 // eslint-disable-next-line react/display-name
 const SuspenseComponent = (Component: any) => (props: any) => {
@@ -37,6 +38,10 @@ const App = () => {
           <Route
             path="html2canvas"
             element={<Html2canvas></Html2canvas>}
+          ></Route>
+          <Route
+            path="aliReactTable"
+            element={<AliReactTable></AliReactTable>}
           ></Route>
         </Routes>
       </BrowserRouter>
