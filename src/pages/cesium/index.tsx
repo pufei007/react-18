@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as Cesium from "cesium";
 import {
   Viewer,
@@ -8,144 +8,99 @@ import {
   Color,
   ArcGisMapServerImageryProvider,
 } from "cesium";
+import CesiumController from "./controller";
 // import "cesium/Build/Cesium/Cesium";
 import icon from "../../assets/location.svg";
 import demoCzml from "./demo";
 import simple from "./simple";
+import axios from "axios";
 // @ts-ignore
-// import CesiumSensorVolumes from "cesium-sensors/lib/custom/custom-sensor-volume";
+import CesiumSensorVolumes from "cesium-sensors/lib/custom/custom-sensor-volume";
 import "./index.less";
 
 const CesiumPage = () => {
-  const csmViewerRef = useRef<null | Viewer>(null);
-  const viewerContainerRef = useRef(null);
+  const [cesium, setCesium] = useState<CesiumController | null>(null);
+  const [czml, setCzml] = useState<any>([]);
 
   useEffect(() => {
-    // const handler = new Cesium.ScreenSpaceEventHandler(
-    //   csmViewerRef.current?.scene.canvas
-    // );
-    // handler.setInputAction((e: any) => {
-    //   var pick = csmViewerRef.current?.scene.pick(e.position);
-    //   console.log(e, pick);
-    // }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-  }, [csmViewerRef.current]);
+    const cesiumOl = new CesiumController("cesiumMap");
+    setCesium(cesiumOl);
+
+    return () => {
+      setCesium(null);
+    };
+  }, []);
 
   useEffect(() => {
-    if (viewerContainerRef.current && !csmViewerRef.current) {
-      csmViewerRef.current = new Viewer("csm-viewer-container");
-      // console.log(csmViewerRef);
-
-      // 加载不同的地图
-      // 使用arcgis map
-      // csmViewerRef.current.imageryLayers.addImageryProvider(
-      //   new ArcGisMapServerImageryProvider({
-      //     url: "http://cache1.arcgisonline.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer",
-      //   })
-      // );
-
-      csmViewerRef.current.baseLayerPicker.viewModel.selectedImagery =
-        csmViewerRef.current.baseLayerPicker.viewModel.imageryProviderViewModels[3];
-
-      csmViewerRef.current.dataSources.add(
-        Cesium.CzmlDataSource.load(demoCzml)
-        // Cesium.CzmlDataSource.load(simple)
-      );
-      csmViewerRef.current.camera.flyHome(0);
-      // csmViewerRef.current.scene.camera.setView({
-      //   destination: Cesium.Cartesian3.fromDegrees(-116.52, 35.02, 95000),
-      //   orientation: {
-      //     heading: 12,
-      //   },
-      // });
-
-      // 初始化场景位置;
-      // csmViewerRef.current.scene.camera.flyTo({
-      //   // 初始化相机经纬度
-      //   // @ts-ignore
-      //   destination: new Cartesian3.fromDegrees(116.39, 39.91, 95000),
-      //   orientation: {
-      //     heading: 6,
-      //     pitch: Math.toRadians(90), //从上往下看为-90
-      //     roll: 0,
-      //   },
-      // });
-
-      // 增加广告牌
-      csmViewerRef.current.entities.add({
-        position: Cartesian3.fromDegrees(121.54035, 38.92146, 100),
-        billboard: {
-          image: icon, // default: undefined
-          show: true, // default
-          pixelOffset: new Cesium.Cartesian2(0, 0), // default: (0, 0)
-          eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
-          horizontalOrigin: Cesium.HorizontalOrigin.CENTER, // default
-          verticalOrigin: Cesium.VerticalOrigin.BOTTOM, // default: CENTER
-          scale: 1.0, // default: 1.0
-          color: Cesium.Color.LIME, // default: WHITE
-          rotation: Cesium.Math.PI_OVER_FOUR, // default: 0.0
-          alignedAxis: Cesium.Cartesian3.ZERO, // default
-          width: 100, // default: undefined
-          height: 25, // default: undefined
-        },
-      });
-
-      // 在上边添加过的线基础上我们再添加一条动效线
-      csmViewerRef.current.entities.add({
-        // name:entity.name,
-        polyline: {
-          positions: Cesium.Cartesian3.fromDegreesArray([
-            121.534575, 38.926131, 121.537579, 38.92543, 121.541784, 38.924578,
-            121.543973, 38.924144, 121.545947, 38.923944,
-          ]),
-          width: 2, // 线的宽度，像素为单位
-          // @ts-ignore
-          // material: new Cesium.PolylineTrailMaterialProperty({
-          //   // 尾迹线材质
-          //   color: Cesium.Color.GOLD,
-          //   trailLength: 0.4,
-          //   period: 3.0,
-          // }),
-        },
-      });
-
-      // To create an entity directly
-      // var entityCollection = new Cesium.EntityCollection();
-
-      // var entity: any = entityCollection.getOrCreateEntity("test");
-      // entity.addProperty("conicSensor");
-
-      // configure other entity properties, e.g. position and orientation...
-
-      // @ts-ignore
-      // entity.conicSensor = new CesiumSensorVolumes.ConicSensorGraphics();
-      // entity.conicSensor.intersectionColor = new Cesium.ConstantProperty(
-      //   new Cesium.Color(0.1, 0.2, 0.3, 0.4)
-      // );
-
-      // 多边形及多边体
-      csmViewerRef.current.entities.add({
-        polygon: {
-          // @ts-ignore
-          hierarchy: Cesium.Cartesian3.fromDegreesArray([
-            121.539208, 38.924962, 121.539176, 38.924737, 121.540195, 38.924486,
-            121.540281, 38.924737,
-          ]),
-          extrudedHeight: 50, //
-          material: Cesium.Color.RED,
-          // closeTop: false,
-          // closeBottom: false,
-        },
-      });
+    if (cesium) {
+      // cesium.start();
+      getCzmlData?.(cesium);
     }
-  }, [viewerContainerRef]);
+  }, [cesium]);
 
-  return (
-    <div
-      className="csm-viewer-container"
-      id="csm-viewer-container"
-      ref={viewerContainerRef}
-    ></div>
-  );
+  useEffect(() => {
+    if (!cesium) return;
+    console.log("czml", czml);
+    // cesium?.loadCzml(czml);
+  }, [cesium, czml]);
+
+  const getCzmlData = async (cesium: any) => {
+    try {
+      const res = await axios.get("../simple.czml");
+      console.log("res", res);
+      const { data = "[]" } = res;
+      console.log("data", data);
+
+      data.forEach((item: any) => {
+        if (item.id === "document") {
+          item.clock.range = "CLAMPED";
+          // item.clock.currenTime = item.clock.currentTime.toString();
+          item.clock.currentTime = "2012-03-15T10:00:00Z";
+        }
+      });
+      // console.log("res", JSON.parse(data));
+      // cesium?.loadCzml("../simple.czml");
+
+      const czml11 = [
+        {
+          id: "document",
+          name: "CZML Point - Time Dynamic",
+          version: "1.0",
+        },
+        {
+          id: "point",
+          // 物体在什么时间范围可用
+          availability: "2012-08-04T16:00:00Z/2012-08-04T16:05:00Z",
+          position: {
+            // 设置物体的起始时间
+            epoch: "2012-08-04T16:00:00Z",
+            // 设置了四个维度，四个维度为一个整体；1维是时间，2维是经度，3维是纬度，4维是高度
+            cartographicDegrees: [
+              0, -70, 20, 150000, 100, -80, 44, 150000, 200, -90, 18, 150000,
+              300, -98, 52, 150000,
+            ],
+          },
+          point: {
+            color: {
+              rgba: [255, 255, 255, 128],
+            },
+            outlineColor: {
+              rgba: [255, 0, 0, 128],
+            },
+            outlineWidth: 3,
+            pixelSize: 15,
+          },
+        },
+      ];
+
+      cesium.loadCzml(czml11);
+      // setCzml(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return <div className="csm-viewer-container" id="cesiumMap"></div>;
 };
 
 export default CesiumPage;
