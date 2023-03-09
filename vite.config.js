@@ -1,6 +1,7 @@
 const path = require("path");
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import reactRefresh from "@vitejs/plugin-react-refresh";
 import cesium from "vite-plugin-cesium";
 import { visualizer } from "rollup-plugin-visualizer";
 
@@ -14,6 +15,7 @@ export default ({ mode }) => {
     hmr: true, //开启热更新
     plugins: [
       react(),
+      reactRefresh(),
       // 设置开启生产打包分析文件大小功能
       visualizer({
         open: true, //注意这里要设置为true，否则无效
@@ -21,7 +23,7 @@ export default ({ mode }) => {
         brotliSize: true,
       }),
       cesium({
-        rebuildCesium: true,
+        // rebuildCesium: true,
       }),
     ],
     define: {

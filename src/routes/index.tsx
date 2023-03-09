@@ -3,12 +3,13 @@ import { useRoutes } from "react-router-dom";
 import { Spin } from "antd";
 
 const Test = lazy(() => import("../pages/test"));
-const Cesium = lazy(() => import("../pages/cesium"));
+const Cesium = lazy(() => import("../pages/cesium/index2"));
 const Query = lazy(() => import("../pages/query"));
 const Infinite = lazy(() => import("../pages/infinite"));
 const Html2canvas = lazy(() => import("../pages/html2canvas"));
 const AliReactTable = lazy(() => import("../pages/aliReactTable"));
 const Three = lazy(() => import("../pages/three"));
+const DesignPattern = lazy(() => import("../pages/designPattern"));
 
 const routes = [
   {
@@ -42,6 +43,10 @@ const routes = [
   {
     path: "/three",
     element: <Three />,
+  },
+  {
+    path: "/designPattern",
+    element: <DesignPattern />,
   },
 ];
 

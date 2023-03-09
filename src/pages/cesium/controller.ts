@@ -1,4 +1,14 @@
 import * as Cesium from "cesium";
+import {
+  Viewer,
+  Entity,
+  Math,
+  Cartesian3,
+  Color,
+  ArcGisMapServerImageryProvider,
+  ScreenSpaceEventHandler,
+  CzmlDataSource,
+} from "cesium";
 
 class CesiumController {
   public container: any;
@@ -10,8 +20,8 @@ class CesiumController {
     this.init();
   }
 
-  init = () => {
-    let viewer = (this.viewer = new Cesium.Viewer(this.container, {
+  init() {
+    let viewer = (this.viewer = new Viewer(this.container, {
       animation: false, // 动画小组件
       baseLayerPicker: false, // 底图组件，选择三维数字地球的底图（imagery and terrain）。
       fullscreenButton: false, // 全屏组件
@@ -50,16 +60,16 @@ class CesiumController {
     );
 
     camera.setView({
-      destination: Cesium.Cartesian3.fromDegrees(120, 30, height),
+      destination: Cartesian3.fromDegrees(120, 30, height),
       orientation: {
-        heading: Cesium.Math.toRadians(-13),
-        pitch: Cesium.Math.toRadians(-90),
+        heading: Math.toRadians(-13),
+        pitch: Math.toRadians(-90),
         roll: 0,
       },
     });
 
-    this.handle = new Cesium.ScreenSpaceEventHandler(this.viewer.scene.canvas); // 注册事件处理程序
-  };
+    this.handle = new ScreenSpaceEventHandler(this.viewer.scene.canvas); // 注册事件处理程序
+  }
 
   flyTo = () => {
     //   // csmViewerRef.current.scene.camera.flyTo({
@@ -100,7 +110,7 @@ class CesiumController {
     //   Cesium.CzmlDataSource.load(czml)
     // );
     // console.log(" this.viewer.dataSources", this.viewer.dataSources);
-    this.viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
+    this.viewer.dataSources.add(CzmlDataSource.load(czml));
   };
 
   // 加载czml

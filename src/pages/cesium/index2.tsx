@@ -21,9 +21,12 @@ import "./index.less";
 const CesiumPage = () => {
   const [cesium, setCesium] = useState<CesiumController | null>(null);
   const [czml, setCzml] = useState<any>([]);
+  const viewerContainerRef = useRef(null);
 
   useEffect(() => {
     const cesiumOl = new CesiumController("cesiumMap");
+    // TODO 确认仅初始化执行loadczml
+    cesiumOl.loadCzml(demoCzml);
     setCesium(cesiumOl);
 
     return () => {
@@ -100,7 +103,13 @@ const CesiumPage = () => {
     }
   };
 
-  return <div className="csm-viewer-container" id="cesiumMap"></div>;
+  return (
+    <div
+      className="csm-viewer-container"
+      id="cesiumMap"
+      ref={viewerContainerRef}
+    ></div>
+  );
 };
 
 export default CesiumPage;
