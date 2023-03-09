@@ -93,7 +93,7 @@ const CesiumPage = () => {
         },
       ];
 
-      cesium.loadCzml(czml11);
+      cesium.loadCzml(data);
       // setCzml(data);
     } catch (error) {
       console.error(error);
