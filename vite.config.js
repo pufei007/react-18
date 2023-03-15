@@ -33,7 +33,6 @@ export default ({ mode }) => {
       // 配置路径别名
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        utils: path.resolve(__dirname, "src/utils"),
       },
     },
     css: {
