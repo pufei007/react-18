@@ -54,5 +54,13 @@ class Observed {
 
     return _this;
   }
+
+  // 清空
+  clear(event: string) {
+    const _this = Observed.instance;
+    _this.list[event] = [];
+
+    return _this;
+  }
 }
 export default new Observed();
