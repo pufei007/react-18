@@ -4,9 +4,11 @@ import react from "@vitejs/plugin-react";
 import reactRefresh from "@vitejs/plugin-react-refresh";
 import cesium from "vite-plugin-cesium";
 import { visualizer } from "rollup-plugin-visualizer";
+import gzipPlugin from "rollup-plugin-gzip";
 
 export default ({ mode }) => {
   return defineConfig({
+    base: "./",
     cors: true, // 默认启⽤并允许任何源
     open: true, // 在服务器启动时⾃动在浏览器中打开应⽤程序
     //反向代理配置，注意rewrite写法，开始没看⽂档在这⾥踩了坑
@@ -41,6 +43,20 @@ export default ({ mode }) => {
         less: {
           javascriptEnabled: true,
         },
+      },
+    },
+    build: {
+      minify: "terser",
+      terserOptions: {
+        compress: {
+          // 默认是 false。移除 console
+          drop_console: mode === "prod",
+          // 默认是 true。移除 debugger
+          drop_debugger: mode === "prod",
+        },
+      },
+      rollupOptions: {
+        plugins: [gzipPlugin()],
       },
     },
   });
