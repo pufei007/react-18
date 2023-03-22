@@ -11,6 +11,7 @@ const AliReactTable = lazy(() => import("../pages/aliReactTable"));
 const Three = lazy(() => import("../pages/three"));
 const DesignPattern = lazy(() => import("../pages/designPattern"));
 const ChunkUpload = lazy(() => import("../pages/chunkUpload"));
+const ReactThreeFiber = lazy(() => import("../pages/reactThreeFiber"));
 
 const routes = [
   {
@@ -52,6 +53,10 @@ const routes = [
   {
     path: "/chunkUpload",
     element: <ChunkUpload />,
+  },
+  {
+    path: "/reactThreeFiber",
+    element: <ReactThreeFiber />,
   },
 ];
 
