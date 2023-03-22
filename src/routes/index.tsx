@@ -10,6 +10,7 @@ const Html2canvas = lazy(() => import("../pages/html2canvas"));
 const AliReactTable = lazy(() => import("../pages/aliReactTable"));
 const Three = lazy(() => import("../pages/three"));
 const DesignPattern = lazy(() => import("../pages/designPattern"));
+const ChunkUpload = lazy(() => import("../pages/chunkUpload"));
 
 const routes = [
   {
@@ -47,6 +48,10 @@ const routes = [
   {
     path: "/designPattern",
     element: <DesignPattern />,
+  },
+  {
+    path: "/chunkUpload",
+    element: <ChunkUpload />,
   },
 ];
 
