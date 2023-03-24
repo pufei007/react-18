@@ -3,7 +3,7 @@ import { useRoutes } from "react-router-dom";
 import { Spin } from "antd";
 
 const Test = lazy(() => import("../pages/test"));
-const Cesium = lazy(() => import("../pages/cesium/index2"));
+const Cesium = lazy(() => import("../pages/cesium"));
 const Query = lazy(() => import("../pages/query"));
 const Infinite = lazy(() => import("../pages/infinite"));
 const Html2canvas = lazy(() => import("../pages/html2canvas"));
