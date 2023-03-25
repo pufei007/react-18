@@ -50,3 +50,39 @@ const clone5 = (arr: any[]) => JSON.parse(JSON.stringify(arr));
 const clone6 = (arr: any[]) => arr.concat([]);
 // @ts-ignore
 const clone7 = (arr: any[]) => window?.structuredClone?.(arr);
+
+/**
+ * 设置cookie
+ * @param name
+ * @param value
+ * @param day
+ */
+export const setCookie = (name: string, value: string | null, day: number) => {
+  let date = new Date();
+  date.setDate(date.getDate() + day);
+  document.cookie = name + "=" + value + ";expires=" + date;
+};
+
+/**
+ *
+ * 获取cookie
+ * @param name
+ * @returns
+ */
+export const getCookie = (name: string) => {
+  let reg = RegExp(name + "=([^;]+)");
+  let arr = document.cookie.match(reg);
+  if (arr) {
+    return arr[1];
+  } else {
+    return "";
+  }
+};
+
+/**
+ * 删除cookie
+ * @param name
+ */
+export const delCookie = (name: string) => {
+  setCookie(name, null, -1);
+};
