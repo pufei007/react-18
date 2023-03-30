@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios");
+const fs = require("fs");
 const app = express();
 const host = "localhost";
 const port = "8889";
@@ -64,16 +66,49 @@ app.post("/api/login", (req, res) => {
 });
 
 app.get("/api/list", (req, res) => {
-  res.send({
-    code: 1,
-    data: [
-      {
-        a: 2,
-        b: 3,
-      },
-    ],
-    msg: "",
+  fs.readFile("data.txt", "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("读取文件失败");
+    } else {
+      res.send({
+        code: 1,
+        data: JSON.parse(data),
+        msg: "",
+      });
+    }
   });
+});
+
+app.get("/api/getTopList", async (req, res) => {
+  try {
+    // 发送 HTTP 请求，获取响应数据
+    const response = await axios.get(
+      "https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50&desktop=true"
+    );
+
+    const resList = response.data?.data ?? [];
+    const topList = [];
+    resList?.forEach((element, index) => {
+      topList.push({
+        index: index + 1,
+        title: element?.target?.title,
+        url: element?.target?.url,
+        url: `https://www.zhihu.com/question/${element?.target?.id}`,
+        hot: element?.detail_text,
+      });
+    });
+
+    // 将解析后的信息作为响应数据返回给前端
+    res.send({
+      code: 1,
+      data: topList,
+      msg: "success",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 });
 
 app.listen(port, () => {

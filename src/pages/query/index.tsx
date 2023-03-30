@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { copyText } from "@/utils";
 import observed from "@/utils/observed";
 import eventEmitter from "@/utils/eventEmitter";
@@ -6,6 +6,8 @@ import { get, post } from "@/utils/request";
 import { Button, message } from "antd";
 
 export default function Query() {
+  const [topList, setTopList] = useState([]);
+
   useEffect(() => {}, []);
 
   const register = async () => {
@@ -35,8 +37,18 @@ export default function Query() {
     const res = await get("/api/list", { page: 1, pageSize: 20 });
     if (!res || res?.code !== 1) return message.error(res?.msg || "fail");
 
+    setTopList(res.data);
     console.log("res", res);
-    message.success("login success");
+    message.success("getList success");
+  };
+
+  const getTopList = async () => {
+    const res = await get("/api/getTopList", { page: 1, pageSize: 20 });
+    if (!res || res?.code !== 1) return message.error(res?.msg || "fail");
+
+    setTopList(res.data);
+    console.log("res", res);
+    message.success("getTopList success");
   };
 
   const copyTextHandle = () => {
@@ -63,6 +75,20 @@ export default function Query() {
       <Button type="primary" onClick={getList}>
         getList
       </Button>
+      <Button type="primary" onClick={getTopList}>
+        getTopList
+      </Button>
+      <br />
+      TOP LIST
+      <div>
+        {topList?.map((item: any, index: number) => (
+          <a key={index} href={item.url} target="_blank" rel="noreferrer">
+            <div>{item.index}</div>
+            <div>{item.title}</div>
+            <div>{item.hot}</div>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }
