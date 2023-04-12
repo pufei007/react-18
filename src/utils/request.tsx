@@ -3,7 +3,7 @@ import { message } from "antd";
 import { delCookie, getCookie } from "@/utils";
 import UrlUtils from "@/utils/url";
 
-const base = "http://localhost:8889"; // /api/
+const base = "http://localhost:3000"; // /api/
 let timer = 0;
 
 interface ResponseType extends AxiosResponse<any, any> {
@@ -19,7 +19,7 @@ axios.interceptors.request.use(
   (config) => {
     clearTimeout(timer);
     let token = getCookie?.("token") || "";
-    if (config?.headers) config.headers["token"] = token;
+    // if (config?.headers) config.headers["token"] = token;
     return config;
   },
   (err) => {

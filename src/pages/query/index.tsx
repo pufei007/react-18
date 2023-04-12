@@ -3,10 +3,14 @@ import { copyText } from "@/utils";
 import observed from "@/utils/observed";
 import eventEmitter from "@/utils/eventEmitter";
 import { get, post } from "@/utils/request";
+import RegExps from "@/utils/reg";
+import { useNavigate } from "react-router-dom";
 import { Button, message } from "antd";
 
 export default function Query() {
   const [topList, setTopList] = useState([]);
+  const router = useNavigate();
+  const ip = RegExps.IP;
 
   useEffect(() => {}, []);
 
@@ -62,6 +66,10 @@ export default function Query() {
   return (
     <div>
       react-query
+      <Button type="primary" onClick={() => router("/query")}>
+        go to query
+      </Button>
+      <br />
       <Button onClick={copyTextHandle}>copy</Button>
       <br />
       <Button type="primary" onClick={login}>
