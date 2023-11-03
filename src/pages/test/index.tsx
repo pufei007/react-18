@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import axios from "axios";
 import { get, post } from "@/utils/request";
+import "./index.less";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -103,6 +104,7 @@ function App() {
       <Register />
       <h1>登录</h1>
       <Login />
+      <div className="cone"></div>
     </div>
   );
 }

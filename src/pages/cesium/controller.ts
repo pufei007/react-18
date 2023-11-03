@@ -23,7 +23,7 @@ class CesiumController {
   init() {
     let viewer = (this.viewer = new Viewer(this.container, {
       animation: true, // 动画小组件
-      baseLayerPicker: false, // 底图组件，选择三维数字地球的底图（imagery and terrain）。
+      baseLayerPicker: true, // 底图组件，选择三维数字地球的底图（imagery and terrain）。
       fullscreenButton: false, // 全屏组件
       vrButton: false, // VR模式
       geocoder: false, // 地理编码（搜索）组件
@@ -67,11 +67,11 @@ class CesiumController {
         roll: 0,
       },
     });
-    // viewer.imageryLayers.addImageryProvider(
-    //   new ArcGisMapServerImageryProvider({
-    //     url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
-    //   })
-    // );
+    //viewer.imageryLayers.addImageryProvider(
+    //new ArcGisMapServerImageryProvider({
+    // url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
+    // })
+    //);
 
     this.handle = new ScreenSpaceEventHandler(this.viewer.scene.canvas); // 注册事件处理程序
   }

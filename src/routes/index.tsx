@@ -13,6 +13,7 @@ const DesignPattern = lazy(() => import("../pages/designPattern"));
 const ChunkUpload = lazy(() => import("../pages/chunkUpload"));
 const ReactThreeFiber = lazy(() => import("../pages/reactThreeFiber"));
 const Websocket = lazy(() => import("../pages/websocket"));
+const Openlayers = lazy(() => import("../pages/openlayers"));
 
 const routes = [
   {
@@ -62,6 +63,10 @@ const routes = [
   {
     path: "/websocket",
     element: <Websocket />,
+  },
+  {
+    path: "/openlayers",
+    element: <Openlayers />,
   },
 ];
 
